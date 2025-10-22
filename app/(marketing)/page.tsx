@@ -33,20 +33,20 @@ export default function MarketingPage() {
             <SignedOut>
               <SignUpButton mode="modal">
                 <Button size="lg" variant="secondary" className="w-full">
-                  Get Started
+                  Empezar
                 </Button>
               </SignUpButton>
 
               <SignInButton mode="modal">
                 <Button size="lg" variant="primaryOutline" className="w-full">
-                  I already have an account
+                  Ya tengo una cuenta
                 </Button>
               </SignInButton>
             </SignedOut>
 
             <SignedIn>
               <Button size="lg" variant="secondary" className="w-full" asChild>
-                <Link href="/learn">Continue Learning</Link>
+                <Link href="/learn">Continuar aprendiendo</Link>
               </Button>
             </SignedIn>
           </ClerkLoaded>
