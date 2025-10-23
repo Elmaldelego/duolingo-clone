@@ -14,7 +14,7 @@ export const Footer = () => {
             width={40}
             className="mr-4 rounded-md"
           />
-          Croatian
+          Ifanteria
         </Button>
 
         <Button size="lg" variant="ghost" className="w-full cursor-default">
@@ -25,7 +25,7 @@ export const Footer = () => {
             width={40}
             className="mr-4 rounded-md"
           />
-          Spanish
+          Caballeria
         </Button>
 
         <Button size="lg" variant="ghost" className="w-full cursor-default">
@@ -36,7 +36,7 @@ export const Footer = () => {
             width={40}
             className="mr-4 rounded-md"
           />
-          French
+          Artillería
         </Button>
 
         <Button size="lg" variant="ghost" className="w-full cursor-default">
@@ -47,7 +47,7 @@ export const Footer = () => {
             width={40}
             className="mr-4 rounded-md"
           />
-          Italian
+          Blindada
         </Button>
 
         <Button size="lg" variant="ghost" className="w-full cursor-default">
@@ -58,13 +58,9 @@ export const Footer = () => {
             width={40}
             className="mr-4 rounded-md"
           />
-          Japanese
+          Ingenieros
         </Button>
       </div>
-    </div>
-  );
-};
-
     </div>
   );
 };
