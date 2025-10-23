@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const siteConfig: Metadata = {
-  title: "Lingo",
+  title: "Fibra",
   description:
     "Interactive platform for language learning with lessons, quizzes, and progress tracking.",
   keywords: [
@@ -41,7 +41,7 @@ export const siteConfig: Metadata = {
   ] as Array<string>,
   authors: {
     name: "Sanidhya Kumar Verma",
-    url: "https://github.com/sanidhyy",
+    url: "",
   },
 } as const;
 
