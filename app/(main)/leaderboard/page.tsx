@@ -52,7 +52,7 @@ const LeaderboardPage = async () => {
           />
 
           <h1 className="my-6 text-center text-2xl font-bold text-neutral-800">
-            Leaderboard
+            Clasificación
           </h1>
           <p className="mb-6 text-center text-lg text-muted-foreground">
             Vea dónde se ubica entre otros estudiantes de la comunidad.
