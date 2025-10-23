@@ -55,7 +55,7 @@ const LeaderboardPage = async () => {
             Leaderboard
           </h1>
           <p className="mb-6 text-center text-lg text-muted-foreground">
-            See where you stand among other learners in the community.
+            Vea dónde se ubica entre otros estudiantes de la comunidad.
           </p>
 
           <Separator className="mb-4 h-0.5 rounded-full" />
