@@ -9,7 +9,7 @@ export const Footer = () => {
         <Button size="lg" variant="ghost" className="w-full cursor-default">
           <Image
             src="/hr.svg"
-            alt="Cabelleria"
+            alt="Ifanteria"
             height={32}
             width={40}
             className="mr-4 rounded-md"
@@ -20,7 +20,7 @@ export const Footer = () => {
         <Button size="lg" variant="ghost" className="w-full cursor-default">
           <Image
             src="/es.svg"
-            alt="Blindada"
+            alt="Caballeria"
             height={32}
             width={40}
             className="mr-4 rounded-md"
@@ -31,7 +31,7 @@ export const Footer = () => {
         <Button size="lg" variant="ghost" className="w-full cursor-default">
           <Image
             src="/fr.svg"
-            alt="Infanteria"
+            alt="Artillería"
             height={32}
             width={40}
             className="mr-4 rounded-md"
@@ -42,7 +42,7 @@ export const Footer = () => {
         <Button size="lg" variant="ghost" className="w-full cursor-default">
           <Image
             src="/it.svg"
-            alt="Caballería"
+            alt="Blindada"
             height={32}
             width={40}
             className="mr-4 rounded-md"
@@ -61,6 +61,10 @@ export const Footer = () => {
           Japanese
         </Button>
       </div>
+    </div>
+  );
+};
+
     </div>
   );
 };
