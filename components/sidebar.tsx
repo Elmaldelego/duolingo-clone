@@ -30,14 +30,14 @@ export const Sidebar = ({ className }: SidebarProps) => {
       </Link>
 
       <div className="flex flex-1 flex-col gap-y-2">
-        <SidebarItem label="Lecciones" href="/lecciones" iconSrc="/learn.svg" />
+        <SidebarItem label="Lecciones" href="/learn" iconSrc="/learn.svg" />
         <SidebarItem
           label="Clasificaciones"
-          href="/clasificaciones"
+          href="/leaderboard"
           iconSrc="/leaderboard.svg"
         />
-        <SidebarItem label="Misiones" href="/misiones" iconSrc="/quests.svg" />
-        <SidebarItem label="Tienda" href="/tienda" iconSrc="/shop.svg" />
+        <SidebarItem label="Misiones" href="/quests" iconSrc="/quests.svg" />
+        <SidebarItem label="Tienda" href="/shop" iconSrc="/shop.svg" />
       </div>
 
       <div className="p-4">
@@ -57,3 +57,4 @@ export const Sidebar = ({ className }: SidebarProps) => {
     </div>
   );
 };
+
