@@ -19,10 +19,30 @@ export const courses = pgTable("courses", {
 
 export const coursesRelations = relations(courses, ({ many }) => ({
   userProgress: many(userProgress),
-  units: many(units),
+  capitulos: many(capitulos),
 }));
 
 export const units = pgTable("units", {
+  id: serial("id").primaryKey(),
+  title: text("title").notNull(), // Unit 1
+  description: text("description").notNull(), // Learn the basics of spanish
+  capituloId: integer("capitulo_id")
+    .references(() => capitulos.id, {
+      onDelete: "cascade",
+    })
+    .notNull(),
+  order: integer("order").notNull(),
+});
+
+export const unitsRelations = relations(units, ({ many, one }) => ({
+  capitulo: one(capitulos, {
+    fields: [units.capituloId],
+    references: [capitulos.id],
+  }),
+  lessons: many(lessons),
+}));
+
+export const capitulos = pgTable("capitulos", {
   id: serial("id").primaryKey(),
   title: text("title").notNull(), // Unit 1
   description: text("description").notNull(), // Learn the basics of spanish
@@ -34,12 +54,32 @@ export const units = pgTable("units", {
   order: integer("order").notNull(),
 });
 
-export const unitsRelations = relations(units, ({ many, one }) => ({
+export const capitulosRelations = relations(capitulos, ({ one, many }) => ({
   course: one(courses, {
-    fields: [units.courseId],
+    fields: [capitulos.courseId],
     references: [courses.id],
   }),
-  lessons: many(lessons),
+  units: many(units),
+  simuladores: many(simulador),
+}));
+
+export const simulador = pgTable("simulador", {
+  id: serial("id").primaryKey(),
+  title: text("title").notNull(),
+  description: text("description").notNull(),
+  capituloId: integer("capitulo_id")
+    .references(() => capitulos.id, {
+      onDelete: "cascade",
+    })
+    .notNull(),
+  order: integer("order").notNull(),
+});
+
+export const simuladorRelations = relations(simulador, ({ one }) => ({
+  capitulo: one(capitulos, {
+    fields: [simulador.capituloId],
+    references: [capitulos.id],
+  }),
 }));
 
 export const lessons = pgTable("lessons", {
