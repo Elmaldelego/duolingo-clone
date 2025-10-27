@@ -1,7 +1,7 @@
 "use server";
 
 import { auth, currentUser } from "@clerk/nextjs/server";
-import { and, eq } from "drizzle-orm";
+import { and, eq, InferSelectModel } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
@@ -12,7 +12,15 @@ import {
   getUserProgress,
   getUserSubscription,
 } from "@/db/queries";
-import { challengeProgress, challenges, userProgress } from "@/db/schema";
+import { challengeProgress, challenges, userProgress, capitulos, courses, lessons, units } from "@/db/schema";
+
+type CourseWithCapitulosAndUnits = InferSelectModel<typeof courses> & {
+  capitulos: (InferSelectModel<typeof capitulos> & {
+    units: (InferSelectModel<typeof units> & {
+      lessons: InferSelectModel<typeof lessons>[];
+    })[];
+  })[];
+};
 
 export const upsertUserProgress = async (courseId: number) => {
   const { userId } = await auth();
@@ -20,7 +28,7 @@ export const upsertUserProgress = async (courseId: number) => {
 
   if (!userId || !user) throw new Error("Unauthorized.");
 
-  const course = await getCourseById(courseId);
+  const course = (await getCourseById(courseId)) as CourseWithCapitulosAndUnits;
 
   if (!course) throw new Error("Course not found.");
 
