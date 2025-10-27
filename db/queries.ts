@@ -1,7 +1,7 @@
 import { cache } from "react";
 
 import { auth } from "@clerk/nextjs/server";
-import { eq, InferResult } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 
 import db from "./drizzle";
 import {
@@ -13,18 +13,6 @@ import {
   userProgress,
   userSubscription,
 } from "./schema";
-
-export type CourseWithCapitulosAndUnits = InferResult<typeof courses, {
-  capitulos: {
-    with: {
-      units: {
-        with: {
-          lessons: true;
-        };
-      };
-    };
-  };
-}>;
 
 const DAY_IN_MS = 86_400_000;
 
@@ -96,7 +84,7 @@ export const getUnits = cache(async () => {
   return normalizedData;
 });
 
-export const getCourseById = cache(async (courseId: number): Promise<CourseWithCapitulosAndUnits | undefined> => {
+export const getCourseById = cache(async (courseId: number) => {
   const data = await db.query.courses.findFirst({
     where: eq(courses.id, courseId),
     with: {
