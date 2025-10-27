@@ -43,17 +43,23 @@ export const getUnits = cache(async () => {
 
   if (!userId || !userProgress?.activeCourseId) return [];
 
-  const data = await db.query.units.findMany({
-    where: eq(units.courseId, userProgress.activeCourseId),
+  // Query capitulos that belong to the active course
+  const data = await db.query.capitulos.findMany({
+    where: eq(capitulos.courseId, userProgress.activeCourseId),
+    orderBy: (capitulos, { asc }) => [asc(capitulos.order)],
     with: {
-      capitulos: {
-        orderBy: (capitulos, { asc }) => [asc(capitulos.order)],
+      units: {
+        orderBy: (units, { asc }) => [asc(units.order)],
         with: {
-          units: {
-            orderBy: (units, { asc }) => [asc(units.order)],
+          lessons: {
+            orderBy: (lessons, { asc }) => [asc(lessons.order)],
             with: {
-              lessons: {
-                orderBy: (lessons, ({ asc }) => [asc(lessons.order)]),
+              challenges: {
+                with: {
+                  challengeProgress: {
+                    where: eq(challengeProgress.userId, userId),
+                  },
+                },
               },
             },
           },
@@ -62,24 +68,28 @@ export const getUnits = cache(async () => {
     },
   });
 
-  const normalizedData = data.map((unit) => {
-    const lessonsWithCompletedStatus = unit.lessons.map((lesson) => {
-      if (lesson.challenges.length === 0)
-        return { ...lesson, completed: false };
+  // Flatten the structure and normalize lessons with completion status
+  const normalizedData = data.flatMap((capitulo) =>
+    capitulo.units.map((unit) => {
+      const lessonsWithCompletedStatus = unit.lessons.map((lesson) => {
+        if (!lesson.challenges || lesson.challenges.length === 0) {
+          return { ...lesson, completed: false };
+        }
 
-      const allCompletedChallenges = lesson.challenges.every((challenge) => {
-        return (
-          challenge.challengeProgress &&
-          challenge.challengeProgress.length > 0 &&
-          challenge.challengeProgress.every((progress) => progress.completed)
-        );
+        const allCompletedChallenges = lesson.challenges.every((challenge) => {
+          return (
+            challenge.challengeProgress &&
+            challenge.challengeProgress.length > 0 &&
+            challenge.challengeProgress.every((progress) => progress.completed)
+          );
+        });
+
+        return { ...lesson, completed: allCompletedChallenges };
       });
 
-      return { ...lesson, completed: allCompletedChallenges };
-    });
-
-    return { ...unit, lessons: lessonsWithCompletedStatus };
-  });
+      return { ...unit, lessons: lessonsWithCompletedStatus };
+    })
+  );
 
   return normalizedData;
 });
