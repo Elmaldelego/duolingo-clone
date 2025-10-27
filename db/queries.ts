@@ -16,8 +16,17 @@ import {
 
 const DAY_IN_MS = 86_400_000;
 
-export const getCourses = cache(async () => {
-  const data = await db.query.courses.findMany();
+export const getUserProgress = cache(async () => {
+  const { userId } = await auth();
+
+  if (!userId) return null;
+
+  const data = await db.query.userProgress.findFirst({
+    where: eq(userProgress.userId, userId),
+    with: {
+      activeCourse: true,
+    },
+  });
 
   return data;
 });
